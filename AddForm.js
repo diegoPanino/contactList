@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {TextInput,StyleSheet,View,Button,KeyboardAvoidingView} from 'react-native';
+import {connect} from 'react-redux';
+import {addContactAction} from './redux/actions.js';
 
 const styles = StyleSheet.create({
 	input:{
@@ -16,7 +18,7 @@ const styles = StyleSheet.create({
 	}
 })
 
-export default class AddForm extends Component{
+class AddForm extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
@@ -51,7 +53,8 @@ export default class AddForm extends Component{
 
 	submitForm=()=>{
 		const newContact = {name:this.state.name,phone:this.state.phone} 
-		this.props.submit(newContact)
+		this.props.addContact(newContact)
+		this.props.submit();
 	}
 
 	render(){
@@ -75,3 +78,4 @@ export default class AddForm extends Component{
 			)
 	}	
 }
+export default connect(null,{addContact:addContactAction})(AddForm);

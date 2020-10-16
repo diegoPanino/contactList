@@ -4,6 +4,7 @@ import Constants from 'expo-constants';
 import ContactList from '../ContactList.js';
 import contacts from '../contact.js';
 import {fetchContatcs} from '../api.js';
+import {connect} from 'react-redux';
 
 const styles = StyleSheet.create({
     body:{
@@ -21,35 +22,18 @@ const styles = StyleSheet.create({
     },
 })
 
-export default class ContactListScreen extends Component{
-    constructor(props){
-      super(props);
-      this.state={
-        contacts:contacts,
-        Contacts:null,
-      }
-    }
-
-    componentDidUpdate(prevProps,prevState){
-      if(this.props.route.params?.submit){
-        const newContact = this.props.route.params.submit
-        if(this.state === prevState){
-          let contactList = this.state.contacts
-          contactList.push(newContact)
-          this.setState({contacts:contactList})
-        }
-      }
-    }
-
-  
-    render(){ 
+const ContactListScreen = (props) =>{
       return (
           <View style={styles.body} >
             <View style={styles.addButton}>
-                <Button onPress={()=>this.props.navigation.navigate('AddForm')} title="+" />
+                <Button onPress={()=>props.navigation.navigate('AddForm')} title="+" />
             </View>
-            <ContactList contacts={this.state.contacts}/>
+            <ContactList contacts={props.contacts}/>
           </View>
-      )}
-}  
+      )}  
+
+const mapStateToProps = state =>({
+  contacts: state.contact
+})
+export default connect(mapStateToProps)(ContactListScreen)
 
