@@ -17,3 +17,20 @@ const trasforData = (contact) => {
 			phone:contact.phone
 		}
 	}
+
+export const loginUser = async (username,password) =>{
+		const response = await fetch('http://192.168.1.110:3001',{
+											method:'POST',
+											headers:{'Content-Type':'application/json'},
+											body: JSON.stringify({
+												'user':username,
+												'psw':password
+											})
+									})
+		if(response.ok){
+			const {token} = await response.json()
+			return token;
+		}
+		const errMsg = await response.text();
+		throw new Error(errMsg);
+}

@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react';
 import {StyleSheet,SectionList,Text,View} from 'react-native';
 

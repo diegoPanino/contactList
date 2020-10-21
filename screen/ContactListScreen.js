@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import { StyleSheet, View, Button } from 'react-native';
 import Constants from 'expo-constants';
 import ContactList from '../ContactList.js';
-import contacts from '../contact.js';
-import {fetchContatcs} from '../api.js';
 import {connect} from 'react-redux';
 
 const styles = StyleSheet.create({
@@ -33,7 +31,9 @@ const ContactListScreen = (props) =>{
       )}  
 
 const mapStateToProps = state =>({
-  contacts: state.contact
+  contacts: state.contacts,
+  err: state.err,
+  token: state.token
 })
 export default connect(mapStateToProps)(ContactListScreen)
 
