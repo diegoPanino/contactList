@@ -18,14 +18,30 @@ export default class PasswordInput extends Component {
 	}
 	render(){
 		const {label,icon,onChange,secure} = this.props
-		return(
+		
+		if(!secure){
+			return(
 				<Item floatingLabel style={{margin:10}} >
 					<Icon active name={icon} />
 					<Label>{label}</Label>
 					<Input secureTextEntry = {secure&&this.state.hide}
-							onChangeText = {(e)=>onChange(e)} />
+							onChangeText = {(e)=>onChange(e)} 
+							value={this.props.value}/>
+				</Item>
+				);
+		}
+		else{
+			return(
+				<Item floatingLabel style={{margin:10}} >
+					<Icon active name={icon} />
+					<Label>{label}</Label>
+					<Input secureTextEntry = {secure&&this.state.hide}
+							onChangeText = {(e)=>onChange(e)} 
+							value={this.props.value}/>
 					<Icon name={this.state.icon} onPress = {this.changeIcon} />
 				</Item>
-			)
+				)
+		}
+					
 	}
 }

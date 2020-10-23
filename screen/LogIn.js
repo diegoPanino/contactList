@@ -2,27 +2,44 @@ import React, {Component} from 'react';
 import {TextInput, Text, KeyboardAvoidingView, View, TouchableOpacity, StyleSheet} from 'react-native';
 import PasswordInput from './PasswordInput.js';
 import {connect} from 'react-redux';
-import {logInAction} from '../redux/actions.js';
+import {logInAction,cleanErrorAction} from '../redux/actions.js';
 
 const LogIn =(props)=>{
 	
 	const [user,setUser] = React.useState('');
 	const [psw,setPsw] = React.useState('');
 
+	React.useEffect(()=>{
+		props.navigation.addListener('blur',()=>{
+			const  clean = '';
+			setUser(clean);
+			setPsw(clean);
+		})
+		if(props.token){
+			props.cleanErrorAction();
+			props.navigation.navigate('ContactList');}
+			
+	},[props.token])
+
 	const checkLog=()=>{
 		props.logInAction(user,psw);
 	}
 
-	React.useEffect(()=>{
-		if(props.token){
-			props.navigation.navigate('ContactList');}
-	},[props.token])
+	const handlerUserChange=(text)=>{
+		setUser(text);
+		props.cleanErrorAction();
+	}
+
+	const handlerPswChange=(text)=>{
+		setPsw(text);
+		props.cleanErrorAction();
+	}
 	
 	return(
 		<View style={styles.main}>
 			<KeyboardAvoidingView style={styles.view} behavior='padding' >
-				<PasswordInput icon='person' label='Username' onChange = {t=>setUser(t)} secure={false}/>
-				<PasswordInput icon='lock' label='Password' onChange = {t=>setPsw(t)} secure={true}/>
+				<PasswordInput icon='person' label='Username' onChange = {handlerUserChange} secure={false} value={user}/>
+				<PasswordInput icon='lock' label='Password' onChange = {handlerPswChange} secure={true} value={psw}/>
 			</KeyboardAvoidingView>
 			<TouchableOpacity style={styles.button} onPress={checkLog}>
 				<Text style={styles.text}>Log in</Text>
@@ -36,7 +53,7 @@ const mapStateToProps =(state)=>({
 	err: state.user.err,
 	token:state.user.token
 })
-export default connect(mapStateToProps,{logInAction})(LogIn);
+export default connect(mapStateToProps,{logInAction,cleanErrorAction})(LogIn);
 
 const styles = StyleSheet.create({
 	main:{
@@ -69,29 +86,3 @@ const styles = StyleSheet.create({
 		elevation: 5,
 	}
 });	
-
-
-
-// checkLogin = () =>{
-	// 	const {user,psw} = this.state
-	// 	fetch('http://192.168.1.110:3001',{
-	// 				method:'post',
-	// 				headers:{'Content-Type':'application/json'},
-	// 				body: JSON.stringify({
-	// 					user: this.state.user,
-	// 					psw: this.state.psw
-	// 		})
-	// 	})
-	// 	.then(res => res.json())
-	// 	.then(data => {
-	// 		if(data){
-	// 			this.setState({user:'',psw:'',err:''})
-	// 			this.props.navigation.navigate('ContactList')
-	// 		}
-	// 		else{
-	// 			this.setState({user:'',psw:''})
-	// 			this.setState({err:'Incorrect Login. Try again.'})
-	// 		}
-	// 	})
-	// 	.catch(err => console.log(err));
-	// }

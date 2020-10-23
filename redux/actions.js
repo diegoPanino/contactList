@@ -7,7 +7,6 @@ export const LOG_IN_FULLFILL = 'LOG_IN_FULLFILL';
 export const LOG_IN_REJECTED = 'LOG_IN_REJECTED';
 export const CLEAN_ERROR = 'CLEAN_ERROR';
 
-
 //action creator
 
 export const addContactAction = newContact => ({
@@ -22,7 +21,6 @@ export const addUserAction = newUser => ({
 
 export const cleanErrorAction = () =>({
 	type:CLEAN_ERROR,
-	payload:'',
 })
 
 //async action creator

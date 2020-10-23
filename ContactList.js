@@ -4,15 +4,23 @@ import {StyleSheet,SectionList,Text,View} from 'react-native';
 const styles = StyleSheet.create({
 	contact:{
 		padding:10,
-		margin:20,
-		backgroundColor:'lightgrey',
-		color:'blue',
-		borderWidth:1,
-		borderColor:'blue',
+		borderBottomWidth:1,
+		borderTopWidth:1,
+		borderColor:'purple',
+		borderRadius:20,
 	},
 	sectionHeader:{
-		paddingLeft:5,
+		backgroundColor:'rgba(128, 0, 128,0.4)',
+		borderRadius:20,
+		fontSize:18,
+		textAlign:'center',
 		fontWeight:'bold',
+		borderColor:'purple',
+		marginRight:150,
+		marginLeft:150,
+	},
+	text:{
+		fontSize:15,
 	}
 })
 const ContactList = props =>{
@@ -20,8 +28,8 @@ const ContactList = props =>{
 	const renderItem = obj =>{
    		return(
    			 <View style={styles.contact}>
-             	<Text>{obj.item.name}</Text>
-              	<Text>{obj.item.phone}</Text>
+             	<Text style={styles.text}>{obj.item.name}</Text>
+              	<Text style={styles.text}>{obj.item.phone}</Text>
           	 </View>)
   	}
 	
